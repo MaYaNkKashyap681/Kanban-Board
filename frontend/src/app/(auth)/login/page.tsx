@@ -21,15 +21,15 @@ const LoginPage = () => {
                 return;
             }
 
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_NEXT_PUBLIC_API_URL}/auth/login`, {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
                 email: email,
                 password: password
             });
-
+            console.log(res);
             if (res.status === 200) {
                 Cookies.set('token', res.data.data.token);
                 Cookies.set('email', res.data.data.email);
-                
+
                 // Update user session using setUser function from useAuth
                 setUser({ token: res.data.token, email: res.data.email });
 
