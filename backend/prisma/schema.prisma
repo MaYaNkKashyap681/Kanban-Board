@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource mongo {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(auto()) @map("_id") @mongo.ObjectId
+  name     String
+  email    String    @unique
+  isAdmin  Boolean   @default(false)
+  projects Project[]
+  password String
+}
+
+model Project {
+  id          String        @id @default(auto()) @map("_id") @mongo.ObjectId
+  name        String
+  description String?
+  owner       User          @relation(fields: [ownerId], references: [id])
+  ownerId     String        @mongo.ObjectId
+  kanbanBoard KanbanBoard[]
+}
+
+model KanbanBoard {
+  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  name      String
+  columns   Column[]
+  projectId String   @unique @mongo.ObjectId
+  project   Project  @relation(fields: [projectId], references: [id])
+}
+
+model Column {
+  id      String      @id @default(auto()) @map("_id") @mongo.ObjectId
+  name    String
+  items   Item[]
+  boardId String      @mongo.ObjectId
+  board   KanbanBoard @relation(fields: [boardId], references: [id])
+}
+
+model Item {
+  id          String    @id @default(auto()) @map("_id") @mongo.ObjectId
+  name        String
+  description String?
+  dueDate     DateTime?
+  columnId    String    @mongo.ObjectId
+  column      Column    @relation(fields: [columnId], references: [id])
+}
