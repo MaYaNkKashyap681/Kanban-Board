@@ -32,7 +32,9 @@ class App {
 
     private initializeMiddleware() {
         this.app.use(express.json());
-        this.app.use(cors());
+        this.app.use(cors({
+            origin: '*'
+        }));
         this.app.get('/', (req: Request, res: Response) => {
             res.send("Hello Server is Active");
         })
