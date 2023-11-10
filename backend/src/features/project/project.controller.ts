@@ -30,7 +30,9 @@ class ProjectController {
 
     private getAllProjects = async (req: RequestWithUser, res: Response, next: NextFunction) => {
         try {
-            const projects = await ProjectModel.find();
+            const projects = await ProjectModel.find({
+                owner: req.user._id
+            });
 
             res.send(responseFormat(projects, true));
         } catch (err) {
