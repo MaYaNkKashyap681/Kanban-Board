@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "src/server.ts",
+            "src": "src/server.js",
             "use": "@vercel/node"
         }
     ],
@@ -13,6 +13,6 @@
         }
     ],
     "env": {
-        "mongo_uri": "mongodb+srv://mayankkashyap705487:root@cluster0.huczc4n.mongodb.net/?retryWrites=true&w=majority"
+        "DATABASE_URL": "mongodb+srv://mayankkashyap705487:root@cluster0.huczc4n.mongodb.net/?retryWrites=true&w=majority"
     }
 }
