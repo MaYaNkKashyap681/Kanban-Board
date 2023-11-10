@@ -5,6 +5,9 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import axios from 'axios';
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const ItemCard = ({ carddata, projectId, colIndex, itemIndex }: { carddata: Item, projectId: string, colIndex: number, itemIndex: number }) => {
 
@@ -17,7 +20,7 @@ const ItemCard = ({ carddata, projectId, colIndex, itemIndex }: { carddata: Item
     const handleDeleteTask = async () => {
         try {
             const response = await axios.delete(
-                `http://localhost:8000/projects/${projectId}/delete-task/${colIndex}/${itemIndex}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/delete-task/${colIndex}/${itemIndex}`,
                 {
                     headers: {
                         'Authorization': `Bearer ${userSession?.token}`,
@@ -38,7 +41,7 @@ const ItemCard = ({ carddata, projectId, colIndex, itemIndex }: { carddata: Item
     const handleUpdateTask = async () => {
         try {
             const response = await axios.put(
-                `http://localhost:8000/projects/${projectId}/update-task/${colIndex}/${itemIndex}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/update-task/${colIndex}/${itemIndex}`,
                 { name: taskName },
                 {
                     headers: {
@@ -62,7 +65,7 @@ const ItemCard = ({ carddata, projectId, colIndex, itemIndex }: { carddata: Item
 
     const handleMoveTask = async (toColumnIndex: number) => {
         try {
-            const response = await axios.post(`http://localhost:8000/projects/${projectId}/move-task/${colIndex}/${toColumnIndex}/${itemIndex}`, null, {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/move-task/${colIndex}/${toColumnIndex}/${itemIndex}`, null, {
                 headers: {
                     'Authorization': `Bearer ${userSession?.token}`,
                 },

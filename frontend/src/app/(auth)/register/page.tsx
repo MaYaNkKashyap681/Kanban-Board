@@ -3,6 +3,7 @@ import axios from 'axios';
 // src/components/Register.js
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import dotenv from 'dotenv'
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
@@ -17,7 +18,7 @@ const RegisterPage = () => {
                 return;
             }
 
-            const res = await axios.post('http://localhost:8000/auth/register', {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
                 name: name,
                 email: email,
                 password: password

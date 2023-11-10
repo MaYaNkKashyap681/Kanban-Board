@@ -13,6 +13,9 @@ import { Plus } from 'lucide-react'
 import axios from 'axios';
 import { withRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 
 const CreateNew = () => {
@@ -28,7 +31,7 @@ const CreateNew = () => {
 
       if(!projectName) return;
       setIsSending(true);
-      const newProject = await axios.post('http://localhost:8000/projects', {
+      const newProject = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
         name: projectName
       }, {
         headers: {

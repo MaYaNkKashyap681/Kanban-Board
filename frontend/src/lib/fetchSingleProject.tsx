@@ -1,10 +1,14 @@
 import axios from 'axios'
+import dotenv from 'dotenv'
 
-export const fetchSingleProject = async (p_id: string) => {
+dotenv.config();
+
+export const fetchSingleProject = async (p_id: string, token: string | undefined) => {
     try {
-        const response = await axios.get(`http://localhost:8000/projects/${p_id}`, {
+        if(!token) return;
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects/${p_id}`, {
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTRjYTAzOTIxMjM2MzcxNGVlMDBhZjAiLCJpYXQiOjE2OTk2MDE1OTAsImV4cCI6MTY5OTYyNjc5MH0.H2BiK0XPLu869gKZKoLZiIDq1y4JpUd585AQ2myXYTQ'
+                'Authorization': `Bearer ${token}`
             }
         });
 

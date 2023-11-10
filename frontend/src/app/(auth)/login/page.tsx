@@ -4,6 +4,10 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { useAuth } from '@/hooks/useAuth';// Import the useAuth hook
+import dotenv from 'dotenv'
+
+dotenv.config();
+
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -17,7 +21,7 @@ const LoginPage = () => {
                 return;
             }
 
-            const res = await axios.post('http://localhost:8000/auth/login', {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_NEXT_PUBLIC_API_URL}/auth/login`, {
                 email: email,
                 password: password
             });

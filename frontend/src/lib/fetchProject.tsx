@@ -1,11 +1,14 @@
 import { useAuth } from '@/hooks/useAuth';
 import axios from 'axios'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 export const fetchProject = async (user_token: string | undefined) => {
     if(!user_token) return;
     try {
 
-        const response = await axios.get('http://localhost:8000/projects', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
             headers: {
                 'Authorization': `Bearer ${user_token}`
             }

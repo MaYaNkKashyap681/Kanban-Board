@@ -5,6 +5,7 @@ import ItemCard from './ItemCard'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { useAuth } from '@/hooks/useAuth'
+import dotenv from 'dotenv'
 
 export const ColumnComp = ({ columns, projectId, colIndex }: { columns: Column, colIndex: number, projectId: string }) => {
   const [isAdding, setIsAdding] = useState(false)
@@ -15,7 +16,7 @@ export const ColumnComp = ({ columns, projectId, colIndex }: { columns: Column, 
   const addTaskToCol = async () => {
     try {
       if (!newTask) return
-      const response = await axios.post(`http://localhost:8000/projects/${projectId}/add-item/${colIndex}`, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/add-item/${colIndex}`, {
         name: newTask
       },
         {
